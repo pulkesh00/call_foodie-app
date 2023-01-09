@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:call_foodie/Controller/login_page_controller.dart';
-import 'package:call_foodie/Screens/home_screen_view.dart';
+import 'package:call_foodie/Modules/Views/home_screen_view.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -58,11 +58,11 @@ class LogInPageView extends GetView<LoginPageController> {
                           height: Get.height * 0.021,
                           width: Get.width * 0.19,
                           child: DefaultTextStyle(
+                              style:
+                                  TextStyle(fontSize: 10, color: Colors.black),
                               child: Text(
                                 'Log in or sign up',
-                              ),
-                              style:
-                                  TextStyle(fontSize: 10, color: Colors.black)),
+                              )),
                         ),
                       ),
                       Container(
@@ -111,11 +111,11 @@ class LogInPageView extends GetView<LoginPageController> {
                           height: Get.height * 0.021,
                           width: Get.width * 0.04,
                           child: DefaultTextStyle(
+                              style:
+                                  TextStyle(fontSize: 10, color: Colors.black),
                               child: Text(
                                 'OR',
-                              ),
-                              style:
-                                  TextStyle(fontSize: 10, color: Colors.black)),
+                              )),
                         ),
                       ),
                       Container(
@@ -136,17 +136,17 @@ class LogInPageView extends GetView<LoginPageController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   DefaultTextStyle(
-                    child: Text('Dont have an acocunt? '),
                     style: TextStyle(fontSize: 14, color: Colors.black),
+                    child: Text('Dont have an acocunt? '),
                   ),
                   TextButton(
                     onPressed: () {},
                     child: DefaultTextStyle(
-                      child: Text('Sign Up Now'),
                       style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                           color: Colors.blue),
+                      child: Text('Sign Up Now'),
                     ),
                   )
                 ],

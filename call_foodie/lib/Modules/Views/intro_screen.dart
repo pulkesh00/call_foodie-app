@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:call_foodie/Screens/home_screen_view.dart';
-import 'package:call_foodie/Screens/login_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import 'login_page_view.dart';
 
 class IntroScreenView extends GetView {
   PageController _pageController = PageController();

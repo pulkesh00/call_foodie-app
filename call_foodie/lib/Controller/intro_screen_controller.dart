@@ -3,7 +3,7 @@ import 'package:get_storage/get_storage.dart';
 
 class IntroScreenController extends GetxController {
   final box = GetStorage();
-  final isIntro = true.obs;
+  final isIntro = false.obs;
 
   @override
   void onInit() {
