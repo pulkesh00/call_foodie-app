@@ -4,21 +4,23 @@ import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:toast/toast.dart';
 
 class LoginPageController extends GetxController {
   
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final countryCode = TextEditingController();
+
   final showPassword = false.obs;
+  var phone = "".obs;
+  static String verify = "";
   final loading = false.obs;
   final box = GetStorage();
   @override
   void onInit() {
     super.onInit();
-    CountryFlag();
   }
 
-  void CountryFlag() {
-   }
 }

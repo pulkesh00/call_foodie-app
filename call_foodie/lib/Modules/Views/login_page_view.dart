@@ -2,11 +2,15 @@
 
 import 'package:call_foodie/Controller/login_page_controller.dart';
 import 'package:call_foodie/Modules/Views/home_screen_view.dart';
+import 'package:call_foodie/Modules/Views/otpView.dart';
+import 'package:call_foodie/main.dart';
 import 'package:country_picker/country_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
+import 'package:toast/toast.dart';
 
 class LogInPageView extends GetView<LoginPageController> {
   const LogInPageView({super.key});
@@ -84,11 +88,39 @@ class LogInPageView extends GetView<LoginPageController> {
                   width: Get.width * 0.9,
                   height: Get.height * 0.08,
                   child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HomeScreenView()));
+                      onPressed: () async {
+                        print(
+                            '+${controller.countryCode.text + controller.phone.value}');
+                        if (controller.phoneController.text.length < 10) {
+                          showToast('Please Enter correct phone Number');
+                        } else {
+                          // await FirebaseAuth.instance.setSettings(
+                          //     appVerificationDisabledForTesting: true);
+                          await FirebaseAuth.instance.verifyPhoneNumber(
+                            phoneNumber:
+                                '+${controller.countryCode.text + controller.phone.value}',
+                            verificationCompleted:
+                                (PhoneAuthCredential credential) {
+                              showToast('OTP sent Successfully');
+                            },
+                            verificationFailed: (FirebaseAuthException e) {
+                              print('error is this $e');
+                              showToast('Too many attemps, try again later!');
+                            },
+                            codeSent:
+                                (String verificationId, int? resendToken) {
+                              LoginPageController.verify = verificationId;
+                              showToast('OTP sent Successfully');
+
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const OtpView()));
+                            },
+                            codeAutoRetrievalTimeout:
+                                (String verificationId) {},
+                          );
+                        }
                       },
                       child: Text('Continue'))),
               Padding(
@@ -189,19 +221,29 @@ class LogInPageView extends GetView<LoginPageController> {
   Row loginViaPhone() {
     return Row(
       children: [
-        GestureDetector(
-          onTap: () {},
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
-              border: Border.all(color: Colors.grey),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            border: Border.all(color: Colors.grey),
+          ),
+          height: 50,
+          width: Get.width * 0.15,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: TextField(
+              controller: controller.countryCode,
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly
+              ],
+              cursorColor: Colors.black,
+              style: TextStyle(color: Colors.black),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: '+91',
+                hintStyle: TextStyle(color: Colors.black, fontSize: 14),
+              ),
             ),
-            height: 50,
-            width: Get.width * 0.2,
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Icon(Icons.flag),
-              Icon(Icons.arrow_drop_down),
-            ]),
           ),
         ),
         Container(
@@ -211,43 +253,31 @@ class LogInPageView extends GetView<LoginPageController> {
           ),
           margin: EdgeInsets.only(left: 4, right: 4),
           height: 50,
-          width: Get.width * 0.7,
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(left: 3),
-                  width: Get.width * 0.1,
-                  child: DefaultTextStyle(
-                    style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold),
-                    child: Text('+879'),
-                  ),
+          width: Get.width * 0.75,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8, right: 4.0),
+            child: SizedBox(
+              height: 50,
+              width: Get.width * 0.55,
+              child: TextField(
+                onChanged: (value) {
+                  controller.phone.value = value;
+                },
+                controller: controller.phoneController,
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                cursorColor: Colors.black,
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Enter Phone Number',
+                  hintStyle: TextStyle(color: Colors.black, fontSize: 14),
                 ),
-                Material(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 4.0),
-                    child: SizedBox(
-                      height: 50,
-                      width: Get.width * 0.55,
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
-                        cursorColor: Colors.black,
-                        style: TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Enter Phone Number',
-                          hintStyle:
-                              TextStyle(color: Colors.black, fontSize: 14),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ]),
+              ),
+            ),
+          ),
         ),
       ],
     );
