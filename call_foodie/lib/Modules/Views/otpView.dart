@@ -44,38 +44,35 @@ class OtpView extends GetView<OtpController> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0, right: 10),
-                child: Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        color: Colors.grey,
-                        height: Get.height * 0.0031,
-                        width: Get.width * 0.35,
-                        margin: EdgeInsets.only(bottom: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      color: Colors.grey,
+                      height: Get.height * 0.0031,
+                      width: Get.width * 0.35,
+                      margin: EdgeInsets.only(bottom: 5),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: SizedBox(
+                        height: Get.height * 0.021,
+                        width: Get.width * 0.19,
+                        child: const DefaultTextStyle(
+                            style: TextStyle(fontSize: 10, color: Colors.black),
+                            child: Text(
+                              'Enter OTP',
+                            )),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: SizedBox(
-                          height: Get.height * 0.021,
-                          width: Get.width * 0.19,
-                          child: const DefaultTextStyle(
-                              style:
-                                  TextStyle(fontSize: 10, color: Colors.black),
-                              child: Text(
-                                'Enter OTP',
-                              )),
-                        ),
-                      ),
-                      Container(
-                        color: Colors.grey,
-                        height: Get.height * 0.0031,
-                        width: Get.width * 0.35,
-                        margin: EdgeInsets.only(bottom: 5),
-                      ),
-                    ],
-                  ),
+                    ),
+                    Container(
+                      color: Colors.grey,
+                      height: Get.height * 0.0031,
+                      width: Get.width * 0.35,
+                      margin: EdgeInsets.only(bottom: 5),
+                    ),
+                  ],
                 ),
               ),
               Padding(

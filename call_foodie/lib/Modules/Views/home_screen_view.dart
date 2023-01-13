@@ -13,74 +13,70 @@ class HomeScreenView extends GetView {
     return Scaffold(
       body: ListView(
         children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Icon(
+                  Icons.location_on,
+                  color: Colors.red,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.grey[300],
+                  ),
+                  height: 32,
+                  width: Get.width * 0.8,
+                  child: const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                          '5JV7+8P Hin Dat, Dan Khun Thot District,5JV7+8P, , Nakhon Ratchasima,'),
+                    ),
+                  ),
+                ),
+                const Icon(
+                  Icons.bike_scooter,
+                  color: Colors.red,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                color: Colors.grey[300],
+              ),
+              height: 50,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   const Icon(
-                    Icons.location_on,
+                    Icons.search,
                     color: Colors.red,
+                    size: 32,
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Colors.grey[300],
-                    ),
-                    height: 32,
-                    width: Get.width * 0.8,
-                    child: const Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                            '5JV7+8P Hin Dat, Dan Khun Thot District,5JV7+8P, , Nakhon Ratchasima,'),
+                  SizedBox(
+                    width: Get.width * 0.7,
+                    child: const TextField(
+                      cursorColor: Colors.black,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hoverColor: Colors.black,
+                        hintText: 'Restaurent name or dish...',
+                        hintStyle: TextStyle(fontSize: 13),
                       ),
                     ),
                   ),
                   const Icon(
-                    Icons.bike_scooter,
+                    Icons.tune,
                     color: Colors.red,
                   ),
                 ],
-              ),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.grey[300],
-                ),
-                height: 50,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const Icon(
-                      Icons.search,
-                      color: Colors.red,
-                      size: 32,
-                    ),
-                    SizedBox(
-                      width: Get.width * 0.7,
-                      child: const TextField(
-                        cursorColor: Colors.black,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hoverColor: Colors.black,
-                          hintText: 'Restaurent name or dish...',
-                          hintStyle: TextStyle(fontSize: 13),
-                        ),
-                      ),
-                    ),
-                    const Icon(
-                      Icons.tune,
-                      color: Colors.red,
-                    ),
-                  ],
-                ),
               ),
             ),
           ),
@@ -135,15 +131,13 @@ class HomeScreenView extends GetView {
                     child: Center(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 32.0),
-                        child: Flexible(
-                          child: Text(
-                            'Pizza',
-                            style: TextStyle(
-                                overflow: TextOverflow.ellipsis,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.white),
-                          ),
+                        child: Text(
+                          'Pizza',
+                          style: TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.white),
                         ),
                       ),
                     ),
@@ -182,15 +176,13 @@ class HomeScreenView extends GetView {
                     child: Center(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 32.0),
-                        child: Flexible(
-                          child: Text(
-                            'Sushi',
-                            style: TextStyle(
-                                overflow: TextOverflow.ellipsis,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.white),
-                          ),
+                        child: Text(
+                          'Sushi',
+                          style: TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.white),
                         ),
                       ),
                     ),
@@ -229,15 +221,13 @@ class HomeScreenView extends GetView {
                     child: Center(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 32.0),
-                        child: Flexible(
-                          child: Text(
-                            'Pizza ',
-                            style: TextStyle(
-                                overflow: TextOverflow.ellipsis,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.white),
-                          ),
+                        child: Text(
+                          'Pizza ',
+                          style: TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.white),
                         ),
                       ),
                     ),
@@ -465,6 +455,7 @@ class HomeScreenView extends GetView {
 
   Container highRating() {
     return Container(
+      decoration: BoxDecoration(),
       height: Get.height * 0.2,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -497,14 +488,12 @@ class HomeScreenView extends GetView {
                       children: [
                         SizedBox(
                           width: Get.width * 0.15,
-                          child: Flexible(
-                            child: Text('Burger',
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    overflow: TextOverflow.ellipsis,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold)),
-                          ),
+                          child: Text('Burger',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  overflow: TextOverflow.ellipsis,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold)),
                         ),
                         SizedBox(
                           width: 3,
@@ -652,75 +641,72 @@ class HomeScreenView extends GetView {
                     Container(
                       height: 38,
                       margin: EdgeInsets.only(left: 4.0),
-                      child: Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: SizedBox(
-                                width: Get.width * 0.78,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        '12 \$',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      SizedBox(
-                                        width: 4,
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: Colors.white),
-                                        constraints: BoxConstraints(
-                                          maxWidth: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.6,
-                                        ),
-                                        height: 20,
-                                        child: const Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 12.0, right: 12, top: 2),
-                                          child: Text(
-                                            'Upto 20 % off',
-                                            style: TextStyle(),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Row(
-                                children: [
-                                  Text('4.0 ',
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: SizedBox(
+                              width: Get.width * 0.78,
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      '12 \$',
                                       style: TextStyle(
                                           fontSize: 16,
                                           color: Colors.white,
-                                          fontWeight: FontWeight.bold)),
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Icon(
-                                      Icons.star,
-                                      size: 20,
-                                      color: Colors.white,
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(
+                                      width: 4,
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: Colors.white),
+                                      constraints: BoxConstraints(
+                                        maxWidth:
+                                            MediaQuery.of(context).size.width *
+                                                0.6,
+                                      ),
+                                      height: 20,
+                                      child: const Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 12.0, right: 12, top: 2),
+                                        child: Text(
+                                          'Upto 20 % off',
+                                          style: TextStyle(),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Row(
+                              children: [
+                                Text('4.0 ',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold)),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Icon(
+                                    Icons.star,
+                                    size: 20,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     )
                   ],

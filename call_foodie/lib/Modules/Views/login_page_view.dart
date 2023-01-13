@@ -1,16 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:call_foodie/Controller/login_page_controller.dart';
-import 'package:call_foodie/Modules/Views/home_screen_view.dart';
 import 'package:call_foodie/Modules/Views/otpView.dart';
 import 'package:call_foodie/main.dart';
-import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
-import 'package:toast/toast.dart';
 
 class LogInPageView extends GetView<LoginPageController> {
   const LogInPageView({super.key});
@@ -20,7 +17,7 @@ class LogInPageView extends GetView<LoginPageController> {
     Get.lazyPut<LoginPageController>(() => LoginPageController());
     return Scaffold(
       body: SingleChildScrollView(
-        // physics: BouncingScrollPhysics(),
+        physics: ClampingScrollPhysics(),
         child: Container(
           color: Colors.white,
           height: Get.height,
@@ -45,38 +42,35 @@ class LogInPageView extends GetView<LoginPageController> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0, right: 10),
-                child: Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        color: Colors.grey,
-                        height: Get.height * 0.0031,
-                        width: Get.width * 0.35,
-                        margin: EdgeInsets.only(bottom: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      color: Colors.grey,
+                      height: Get.height * 0.0031,
+                      width: Get.width * 0.35,
+                      margin: EdgeInsets.only(bottom: 5),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: SizedBox(
+                        height: Get.height * 0.021,
+                        width: Get.width * 0.19,
+                        child: DefaultTextStyle(
+                            style: TextStyle(fontSize: 10, color: Colors.black),
+                            child: Text(
+                              'Log in or sign up',
+                            )),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: SizedBox(
-                          height: Get.height * 0.021,
-                          width: Get.width * 0.19,
-                          child: DefaultTextStyle(
-                              style:
-                                  TextStyle(fontSize: 10, color: Colors.black),
-                              child: Text(
-                                'Log in or sign up',
-                              )),
-                        ),
-                      ),
-                      Container(
-                        color: Colors.grey,
-                        height: Get.height * 0.0031,
-                        width: Get.width * 0.35,
-                        margin: EdgeInsets.only(bottom: 5),
-                      ),
-                    ],
-                  ),
+                    ),
+                    Container(
+                      color: Colors.grey,
+                      height: Get.height * 0.0031,
+                      width: Get.width * 0.35,
+                      margin: EdgeInsets.only(bottom: 5),
+                    ),
+                  ],
                 ),
               ),
               Padding(
@@ -89,8 +83,6 @@ class LogInPageView extends GetView<LoginPageController> {
                   height: Get.height * 0.08,
                   child: ElevatedButton(
                       onPressed: () async {
-                        print(
-                            '+${controller.countryCode.text + controller.phone.value}');
                         if (controller.phoneController.text.length < 10) {
                           showToast('Please Enter correct phone Number');
                         } else {
@@ -104,7 +96,6 @@ class LogInPageView extends GetView<LoginPageController> {
                               showToast('OTP sent Successfully');
                             },
                             verificationFailed: (FirebaseAuthException e) {
-                              print('error is this $e');
                               showToast('Too many attemps, try again later!');
                             },
                             codeSent:
@@ -126,38 +117,35 @@ class LogInPageView extends GetView<LoginPageController> {
               Padding(
                 padding:
                     const EdgeInsets.only(left: 10.0, right: 10, bottom: 10),
-                child: Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        color: Colors.grey,
-                        height: Get.height * 0.0031,
-                        width: Get.width * 0.45,
-                        margin: EdgeInsets.only(bottom: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      color: Colors.grey,
+                      height: Get.height * 0.0031,
+                      width: Get.width * 0.45,
+                      margin: EdgeInsets.only(bottom: 5),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: SizedBox(
+                        height: Get.height * 0.021,
+                        width: Get.width * 0.04,
+                        child: DefaultTextStyle(
+                            style: TextStyle(fontSize: 10, color: Colors.black),
+                            child: Text(
+                              'OR',
+                            )),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: SizedBox(
-                          height: Get.height * 0.021,
-                          width: Get.width * 0.04,
-                          child: DefaultTextStyle(
-                              style:
-                                  TextStyle(fontSize: 10, color: Colors.black),
-                              child: Text(
-                                'OR',
-                              )),
-                        ),
-                      ),
-                      Container(
-                        color: Colors.grey,
-                        height: Get.height * 0.0031,
-                        width: Get.width * 0.4,
-                        margin: EdgeInsets.only(bottom: 5),
-                      ),
-                    ],
-                  ),
+                    ),
+                    Container(
+                      color: Colors.grey,
+                      height: Get.height * 0.0031,
+                      width: Get.width * 0.4,
+                      margin: EdgeInsets.only(bottom: 5),
+                    ),
+                  ],
                 ),
               ),
               Padding(
