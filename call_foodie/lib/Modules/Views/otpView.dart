@@ -1,5 +1,6 @@
 import 'package:call_foodie/Controller/login_page_controller.dart';
 import 'package:call_foodie/Modules/Views/home_screen_view.dart';
+import 'package:call_foodie/Routes/app_pages.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
@@ -20,86 +21,98 @@ class OtpView extends GetView<OtpController> {
     return Scaffold(
       body: SingleChildScrollView(
         // physics: BouncingScrollPhysics(),
-        child: Container(
-          color: Colors.white,
-          height: Get.height,
-          child: Column(
-            children: [
-              SizedBox(
-                width: Get.width,
-                height: Get.height * 0.5,
-                child: Image.asset(
-                  'assets/images/login_image.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
-              SizedBox(
-                height: Get.height * 0.1,
-                width: Get.width * 0.7,
-                child: Center(
-                  child: Image.asset(
-                    'assets/images/call_foodie_text.png',
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      color: Colors.grey,
-                      height: Get.height * 0.0031,
-                      width: Get.width * 0.35,
-                      margin: EdgeInsets.only(bottom: 5),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: SizedBox(
-                        height: Get.height * 0.021,
-                        width: Get.width * 0.19,
-                        child: const DefaultTextStyle(
-                            style: TextStyle(fontSize: 10, color: Colors.black),
-                            child: Text(
-                              'Enter OTP',
-                            )),
+        child: Obx(
+          () => Container(
+            color: Colors.white,
+            height: Get.height,
+            child: controller.loading.value
+                ? Column(
+                    children: [
+                      SizedBox(
+                        width: Get.width,
+                        height: Get.height * 0.5,
+                        child: Image.asset(
+                          'assets/images/login_image.png',
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    Container(
-                      color: Colors.grey,
-                      height: Get.height * 0.0031,
-                      width: Get.width * 0.35,
-                      margin: EdgeInsets.only(bottom: 5),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: OtpBox(),
-              ),
-              Container(
-                  padding: EdgeInsets.all(10),
-                  width: Get.width * 0.9,
-                  height: Get.height * 0.08,
-                  child: ElevatedButton(
-                      onPressed: () async {
-                        PhoneAuthCredential credential =
-                            PhoneAuthProvider.credential(
-                                verificationId: LoginPageController.verify,
-                                smsCode: controller.otpTextController.text);
-
-                        // Sign the user in (or link) with the credential
-                        await FirebaseAuth.instance
-                            .signInWithCredential(credential);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HomeScreenView()));
-                      },
-                      child: Text('Continue'))),
-            ],
+                      SizedBox(
+                        height: Get.height * 0.1,
+                        width: Get.width * 0.7,
+                        child: Center(
+                          child: Image.asset(
+                            'assets/images/call_foodie_text.png',
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10.0, right: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              color: Colors.grey,
+                              height: Get.height * 0.0031,
+                              width: Get.width * 0.35,
+                              margin: EdgeInsets.only(bottom: 5),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: SizedBox(
+                                height: Get.height * 0.021,
+                                width: Get.width * 0.19,
+                                child: const DefaultTextStyle(
+                                    style: TextStyle(
+                                        fontSize: 10, color: Colors.black),
+                                    child: Text(
+                                      'Enter OTP',
+                                    )),
+                              ),
+                            ),
+                            Container(
+                              color: Colors.grey,
+                              height: Get.height * 0.0031,
+                              width: Get.width * 0.35,
+                              margin: EdgeInsets.only(bottom: 5),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: OtpBox(),
+                      ),
+                      Container(
+                          padding: EdgeInsets.all(10),
+                          width: Get.width * 0.9,
+                          height: Get.height * 0.08,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                controller.otpVarified();
+                              },
+                              child: Text('Continue'))),
+                      Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                                'You can resend Otp after 00:${controller.start} seconds'),
+                            controller.start.value == 00
+                                ? TextButton(
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                    child: Text('Resend'))
+                                : SizedBox(),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+                : Image.asset(
+                    'assets/images/loading.gif',
+                  ),
           ),
         ),
       ),
@@ -116,7 +129,10 @@ class OtpView extends GetView<OtpController> {
       listenForMultipleSmsOnAndroid: true,
       defaultPinTheme: controller.defaultPinTheme,
       validator: (value) {
-        return value == LoginPageController.verify ? null : 'Pin is incorrect';
+        controller.code = value ?? '';
+      },
+      onChanged: (value) {
+        controller.code = value;
       },
       // onClipboardFound: (value) {
       //   debugPrint('onClipboardFound: $value');
@@ -147,7 +163,7 @@ class OtpView extends GetView<OtpController> {
         decoration: controller.defaultPinTheme.decoration!.copyWith(
           color: Colors.white,
           borderRadius: BorderRadius.circular(19),
-          border: Border.all(color: Colors.black),
+          border: Border.all(color: Colors.green),
         ),
       ),
       errorPinTheme: controller.defaultPinTheme.copyBorderWith(

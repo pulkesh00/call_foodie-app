@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../Routes/app_pages.dart';
 import 'login_page_view.dart';
 
 class IntroScreenView extends GetView {
@@ -113,50 +114,58 @@ class IntroScreenView extends GetView {
               ],
             ),
           ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10.0, left: 36),
-              child: SizedBox(
-                height: 30,
-                width: 120,
-                child: SmoothPageIndicator(
-                  count: 3,
-                  controller: _pageController,
-                  effect:
-                      //https://pub.dev/packages/smooth_page_indicator/example
-                      const ExpandingDotsEffect(
-                          activeDotColor: Color(0xFFE94335),
-                          dotColor: Color(0xFFFFAFA8),
-                          dotHeight: 10,
-                          dotWidth: 10),
+          Positioned(
+            bottom: 30,
+            child: Column(
+              children: [
+                Container(
+                  height: 30,
+                  width: 120,
+                  margin: EdgeInsets.only(
+                      left: Get.width * 0.3, right: Get.width * 0.3),
+                  child: Center(
+                    child: SmoothPageIndicator(
+                      count: 3,
+                      controller: _pageController,
+                      effect:
+                          //https://pub.dev/packages/smooth_page_indicator/example
+                          const ExpandingDotsEffect(
+                              activeDotColor: Color(0xFFE94335),
+                              dotColor: Color(0xFFFFAFA8),
+                              dotHeight: 10,
+                              dotWidth: 10),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
-          Center(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Color(0xFFE94335),
-              ),
-              margin: EdgeInsets.only(top: 10),
-              height: 46,
-              width: 158,
-              child: TextButton(
-                onPressed: () {
-                  _pageController.animateToPage(index++,
-                      duration: const Duration(microseconds: 200),
-                      curve: Curves.ease);
-                  if (index > 3) {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => GetStarted()));
-                  }
-                },
-                child: Text(
-                  'Next',
-                  style: TextStyle(color: Colors.white),
+                SizedBox(
+                  height: 16,
                 ),
-              ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color(0xFFE94335),
+                  ),
+                  width: Get.width * 0.3,
+                  margin: EdgeInsets.only(
+                      left: Get.width * 0.34, right: Get.width * 0.36),
+                  child: Center(
+                    child: TextButton(
+                      onPressed: () {
+                        _pageController.animateToPage(index++,
+                            duration: const Duration(microseconds: 200),
+                            curve: Curves.ease);
+                        if (index > 3) {
+                          Get.to(() => GetStarted());
+                        }
+                      },
+                      child: Text(
+                        'Next',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           )
         ],
@@ -172,45 +181,49 @@ class GetStarted extends GetView {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 180.0),
-            child: Center(
-              child: SvgPicture.asset('assets/images/image_fifth.svg'),
+        child: Stack(children: [
+          Center(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 180.0),
+                  child: Center(
+                    child: SvgPicture.asset('assets/images/image_fifth.svg'),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: SizedBox(
+                    width: Get.width * 0.7,
+                    height: 80,
+                    child: Text(
+                      'Welcome',
+                      style: TextStyle(
+                          fontSize: 32,
+                          color: Color(0xFFE94335),
+                          fontFamily: 'BerkShireSwash'),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          SizedBox(
-            height: 20,
-          ),
-          Center(
-            child: SizedBox(
-              width: Get.width * 0.7,
-              height: 80,
-              child: Text(
-                'Welcome',
-                style: TextStyle(
-                    fontSize: 32,
-                    color: Color(0xFFE94335),
-                    fontFamily: 'BerkShireSwash'),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-          Center(
+          Positioned(
+            bottom: 30,
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: Color(0xFFE94335),
               ),
-              margin: EdgeInsets.only(top: 100),
-              height: 46,
-              width: 158,
+              width: Get.width * 0.3,
+              margin: EdgeInsets.only(
+                  left: Get.width * 0.34, right: Get.width * 0.36),
               child: TextButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LogInPageView()));
+                  Get.offAllNamed(Routes.loginPage);
                 },
                 child: Text(
                   'Get Started',

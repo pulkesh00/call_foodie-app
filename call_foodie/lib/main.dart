@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:call_foodie/Routes/app_pages.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -22,22 +23,15 @@ class MyApp extends GetView {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
+      initialRoute: AppPages.initial,
+      getPages: AppPages.routes,
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: AnimatedSplashScreen(
-        nextScreen: IntroScreen(),
-        duration: 2000,
-        splash: ClipRRect(
-            borderRadius: BorderRadius.circular(100),
-            child: Image.asset(
-              'assets/images/login_image.png',
-              height: 120,
-            )),
-      ),
+      home: Container(),
     );
   }
 }
@@ -45,7 +39,6 @@ class MyApp extends GetView {
 showToast(msg, {long}) {
   if (!kIsWeb) Fluttertoast.cancel();
   Fluttertoast.showToast(
-    gravity: ToastGravity.CENTER,
     msg: msg,
     backgroundColor: Colors.black,
     textColor: Colors.white,
