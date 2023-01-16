@@ -5,11 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class HomeScreenView extends GetView {
+import '../../Controller/home_screen_controller.dart';
+
+class HomeScreenView extends GetView<HomeScreenController> {
   const HomeScreenView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Get.lazyPut<HomeScreenController>(() => HomeScreenController());
     return Scaffold(
       body: ListView(
         children: [
