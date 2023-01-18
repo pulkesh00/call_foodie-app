@@ -20,6 +20,7 @@ class LoginPageController extends GetxController {
   final showPassword = false.obs;
   var phone = "".obs;
   static String verify = "";
+  static int? resend;
   final loading = true.obs;
   var userEmail = ''.obs;
   final box = GetStorage();
@@ -43,11 +44,16 @@ class LoginPageController extends GetxController {
       codeSent: (String verificationId, int? resendToken) {
         loading.value = true;
         LoginPageController.verify = verificationId;
+        resend = resendToken;
         showToast('OTP sent Successfully');
 
         Get.toNamed(Routes.otpScreen);
       },
-      codeAutoRetrievalTimeout: (String verificationId) {},
+      timeout: const Duration(seconds: 25),
+      forceResendingToken: resend,
+      codeAutoRetrievalTimeout: (String verificationId) {
+        
+      },
     );
   }
 

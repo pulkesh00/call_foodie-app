@@ -46,11 +46,12 @@ class OtpController extends GetxController {
   otpVarified() async {
     try {
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
-          verificationId: LoginPageController.verify, smsCode: code);
+          verificationId: LoginPageController.verify, smsCode: code, );
 
       await FirebaseAuth.instance.signInWithCredential(credential);
       loading.value = true;
       Get.offAllNamed(Routes.homePage);
+      
     } catch (e) {
       if (code == otpTextController.text) {
         wrongOtp.value = true;

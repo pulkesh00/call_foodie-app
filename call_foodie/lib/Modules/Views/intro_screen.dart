@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:call_foodie/Controller/introController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -8,14 +9,12 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../Routes/app_pages.dart';
 import 'login_page_view.dart';
 
-class IntroScreenView extends GetView {
-  PageController _pageController = PageController();
-  int index = 1;
-
-  IntroScreenView({super.key});
+class IntroScreenView extends GetView<IntroController> {
+  const IntroScreenView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Get.lazyPut<IntroController>(() => IntroController());
     return Scaffold(
       body: ListView(
         children: [
@@ -23,9 +22,9 @@ class IntroScreenView extends GetView {
             height: Get.height * 0.8,
             child: PageView(
               onPageChanged: (index) {
-                index++;
+                controller.index.value;
               },
-              controller: _pageController,
+              controller: controller.pageController,
               children: [
                 Container(
                   child: Column(children: [
@@ -114,53 +113,70 @@ class IntroScreenView extends GetView {
               ],
             ),
           ),
-          Positioned(
-            bottom: 30,
-            child: Column(
+          Container(
+            height: 30,
+            width: 120,
+            margin:
+                EdgeInsets.only(left: Get.width * 0.3, right: Get.width * 0.3),
+            child: Center(
+              child: SmoothPageIndicator(
+                count: 3,
+                controller: controller.pageController,
+                effect:
+                    //https://pub.dev/packages/smooth_page_indicator/example
+                    const ExpandingDotsEffect(
+                        activeDotColor: Color(0xFFE94335),
+                        dotColor: Color(0xFFFFAFA8),
+                        dotHeight: 10,
+                        dotWidth: 10),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Obx(
+            () => Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(
-                  height: 30,
-                  width: 120,
-                  margin: EdgeInsets.only(
-                      left: Get.width * 0.3, right: Get.width * 0.3),
-                  child: Center(
-                    child: SmoothPageIndicator(
-                      count: 3,
-                      controller: _pageController,
-                      effect:
-                          //https://pub.dev/packages/smooth_page_indicator/example
-                          const ExpandingDotsEffect(
-                              activeDotColor: Color(0xFFE94335),
-                              dotColor: Color(0xFFFFAFA8),
-                              dotHeight: 10,
-                              dotWidth: 10),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 16,
-                ),
+                controller.index.value >= 0
+                    ? Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color(0xFFE94335),
+                        ),
+                        width: Get.width * 0.15,
+                        // margin: EdgeInsets.only(
+                        //     left: Get.width * 0.34, right: Get.width * 0.36),
+                        child: Center(
+                          child: TextButton(
+                            onPressed: () {
+                              controller.pageDecrease();
+                            },
+                            child: Text(
+                              '<',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 30),
+                            ),
+                          ),
+                        ),
+                      )
+                    : SizedBox(),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: Color(0xFFE94335),
                   ),
-                  width: Get.width * 0.3,
-                  margin: EdgeInsets.only(
-                      left: Get.width * 0.34, right: Get.width * 0.36),
+                  width: Get.width * 0.15,
+                  // margin: EdgeInsets.only(right: Get.width * 0.01),
                   child: Center(
                     child: TextButton(
                       onPressed: () {
-                        _pageController.animateToPage(index++,
-                            duration: const Duration(microseconds: 200),
-                            curve: Curves.ease);
-                        if (index > 3) {
-                          Get.to(() => GetStarted());
-                        }
+                        controller.pageIncrease();
                       },
                       child: Text(
-                        'Next',
-                        style: TextStyle(color: Colors.white),
+                        '>',
+                        style: TextStyle(color: Colors.white, fontSize: 30),
                       ),
                     ),
                   ),

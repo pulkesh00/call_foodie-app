@@ -14,9 +14,10 @@ class IntroScreen extends GetView<IntroScreenController> {
   Widget build(BuildContext context) {
     Get.lazyPut<IntroScreenController>(() => IntroScreenController());
     return Scaffold(
-      body: Obx(() => controller.isIntro.value ==false
+      body: Obx(() => controller.isIntro.value == false
           ? IntroScreenView()
           : HomeScreenView()),
     );
   }
 }
+
