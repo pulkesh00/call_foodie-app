@@ -12,19 +12,19 @@ class IntroController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    index.value=-1;
-    pageController.addListener(listener);
+    index.value = 0;
   }
 
   pageIncrease() {
-    if (index.value < 0) {
-      index.value++;
-    }
+    // if (index.value < 0) {
+    //   index.value++;
+    // }
     index.value++;
-    print("pageValue moved to  ${index}");
+    // print("pageValue moved to  ${index}");
 
     pageController.animateToPage(index.value,
         duration: const Duration(milliseconds: 600), curve: Curves.easeIn);
+    print("pageValue increase to  ${index}");
 
     if (index.value > 2) {
       Get.to(() => const GetStarted());
@@ -35,26 +35,24 @@ class IntroController extends GetxController {
   pageDecrease() {
     if (index.value == 2) {
       index.value = 1;
+      pageController.animateToPage(1,
+          duration: const Duration(milliseconds: 600), curve: Curves.easeIn);
+      print("pageValue decrease to  ${index}");
     }
     // index.value--;
+    else {
+      print("pageValue before to  ${index}");
 
-    pageController.animateToPage(index.value--,
-        duration: const Duration(milliseconds: 600), curve: Curves.easeIn);
-    print("pageValue decrease to  ${index}");
+      pageController.animateToPage(index.value--,
+          duration: const Duration(milliseconds: 600), curve: Curves.easeIn);
+      print("pageValue decrease to  ${index}");
+    }
 
-    if (index.value < 0) {
+    if (index.value == 0) {
       pageController.animateToPage(0,
           duration: const Duration(milliseconds: 600),
           curve: Curves.easeInBack);
-    }
-  }
-
-  listener() {
-    if (pageController.position.userScrollDirection ==
-        ScrollDirection.reverse) {
-      // pageDecrease();
-    } else {
-      // pageIncrease();
+      // index.value == 0;
     }
   }
 }

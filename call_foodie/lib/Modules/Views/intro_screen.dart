@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unnecessary_brace_in_string_interps
 
 import 'package:call_foodie/Controller/introController.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +21,9 @@ class IntroScreenView extends GetView<IntroController> {
           Container(
             height: Get.height * 0.8,
             child: PageView(
-              onPageChanged: (index) {
-                controller.index.value;
+              onPageChanged: (i) {
+                controller.index.value = i;
+                print('pageValue ${i}');
               },
               controller: controller.pageController,
               children: [
@@ -139,7 +140,7 @@ class IntroScreenView extends GetView<IntroController> {
             () => Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                controller.index.value >= 0
+                controller.index.value > 0
                     ? Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
@@ -150,6 +151,9 @@ class IntroScreenView extends GetView<IntroController> {
                         //     left: Get.width * 0.34, right: Get.width * 0.36),
                         child: Center(
                           child: TextButton(
+                            style: TextButton.styleFrom(
+                              splashFactory: NoSplash.splashFactory,
+                            ),
                             onPressed: () {
                               controller.pageDecrease();
                             },
@@ -171,6 +175,9 @@ class IntroScreenView extends GetView<IntroController> {
                   // margin: EdgeInsets.only(right: Get.width * 0.01),
                   child: Center(
                     child: TextButton(
+                      style: TextButton.styleFrom(
+                        splashFactory: NoSplash.splashFactory,
+                      ),
                       onPressed: () {
                         controller.pageIncrease();
                       },
