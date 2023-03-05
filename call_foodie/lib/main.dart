@@ -29,6 +29,7 @@ class MyApp extends GetView {
       initialRoute: AppPages.initial,
       getPages: AppPages.routes,
       theme: ThemeData(
+        useMaterial3: true,
         primarySwatch: Colors.red,
       ),
       home: Container(),
